@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+}
+
+group = 'com.lemelson.visualizer'
+version = '0.1.0'
+
+def javaVersion = 17
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.2'
+    implementation 'net.objecthunter:exp4j:0.4.8'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.1'
+}
+
+application {
+    mainClass = 'com.lemelson.visualizer.app.Main'
+    applicationDefaultJvmArgs = ['--enable-native-access=javafx.graphics']
+}
+
+javafx {
+    version = '21.0.1'
+    modules = ['javafx.controls', 'javafx.graphics', 'javafx.swing']
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = javaVersion
+}
+
+tasks.withType(Javadoc).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+test {
+    useJUnitPlatform()
+}
